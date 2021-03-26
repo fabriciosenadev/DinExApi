@@ -11,6 +11,5 @@ namespace DinExApi.Domain.Models
         public string Name { get; set; }
         //TODO: Migrar prop Applicable para enum
         public string Applicable { get; set; }
-        //TODO: Verificar necessidade de criar props de controle: CreatedBY, CreatedAt, UpdatedAt e DeletedAt
     }
 }
