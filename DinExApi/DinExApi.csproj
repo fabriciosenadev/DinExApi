@@ -10,13 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Interfaces\" />
-    <Folder Include="Application\Services\" />
     <Folder Include="Domain\Business\" />
     <Folder Include="Infrastructure\DB\Migrations\" />
     <Folder Include="Infrastructure\DB\Seeders\" />
-    <Folder Include="Persistence\Interfaces\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
 </Project>
