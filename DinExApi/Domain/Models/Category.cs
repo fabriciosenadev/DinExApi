@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DinExApi.Domain.Models
 {
@@ -11,6 +8,10 @@ namespace DinExApi.Domain.Models
         public string Name { get; set; }
         public string Applicable { get; set; } //TODO: migrar para enum
         public string IsCustom { get; set; } //TODO: migrar para enum
+        public string CreatedBY { get; set; } // string or int
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime DeletedAt { get; set; }
         //TODO: Verificar necessidade de criar props de controle: CreatedBY, CreatedAt, UpdatedAt e DeletedAt
     }
 }

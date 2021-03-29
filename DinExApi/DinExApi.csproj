@@ -5,12 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\Business\**" />
+    <Content Remove="Domain\Business\**" />
+    <EmbeddedResource Remove="Domain\Business\**" />
+    <None Remove="Domain\Business\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Business\" />
     <Folder Include="Infrastructure\DB\Migrations\" />
     <Folder Include="Infrastructure\DB\Seeders\" />
   </ItemGroup>

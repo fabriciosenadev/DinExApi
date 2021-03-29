@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DinExApi.Controllers
+namespace DinExApi.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

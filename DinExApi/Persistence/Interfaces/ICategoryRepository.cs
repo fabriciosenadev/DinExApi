@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DinExApi.Domain.Models;
 using System.Threading.Tasks;
 
 namespace DinExApi.Persistence.Interfaces
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
+        Task<Category> SearchAsync(int id);
     }
 }
