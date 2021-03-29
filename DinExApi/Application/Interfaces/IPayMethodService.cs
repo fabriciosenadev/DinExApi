@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace DinExApi.Application.Interfaces
 {
-    interface IPayMethodService
+    public interface IPayMethodService
     {
+        Task FindAll();
     }
 }

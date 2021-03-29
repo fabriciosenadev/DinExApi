@@ -14,5 +14,6 @@ namespace DinExApi.Infrastructure.DB.Data
         }
 
         public DbSet<PayMethod> PayMethod { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }
