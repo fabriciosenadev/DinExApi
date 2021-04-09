@@ -1,3 +1,4 @@
+using DinExApi.Infrastructure.DB.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -19,6 +20,12 @@ namespace DinExApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
+            // make works SQLite based on context
+            using (var client = new DinExApiContext())
+            {
+                client.Database.EnsureCreated();
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +39,9 @@ namespace DinExApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DinExApi", Version = "v1" });
             });
+
+            // make SQLite works
+            services.AddEntityFrameworkSqlite().AddDbContext<DinExApiContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
