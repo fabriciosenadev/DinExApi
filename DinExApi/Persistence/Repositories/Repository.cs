@@ -8,9 +8,9 @@ namespace DinExApi.Persistence.Repositories
     public abstract class Repository<T> : IRepository<T> where T : class
     {
         protected readonly DbSet<T> DbSet;
-        protected readonly DinExContext dinExContext;
+        protected readonly DinExApiContext dinExContext;
 
-        public Repository(DinExContext dinExContext)
+        public Repository(DinExApiContext dinExContext)
         {
             this.dinExContext = dinExContext;
             DbSet = dinExContext.Set<T>();

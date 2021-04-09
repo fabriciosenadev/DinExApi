@@ -8,7 +8,7 @@ namespace DinExApi.Persistence.Repositories
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public CategoryRepository(DinExContext dinExContext) : base(dinExContext) { }
+        public CategoryRepository(DinExApiContext dinExApiContext) : base(dinExApiContext) { }
 
         public async Task<Category> SearchAsync(int id)
         {
