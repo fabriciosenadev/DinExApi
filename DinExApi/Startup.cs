@@ -21,7 +21,7 @@ namespace DinExApi
         {
             Configuration = configuration;
             
-            // make works SQLite based on context
+            // make works SQLite based on context - replace a standard constructor
             using (var client = new DinExApiContext())
             {
                 client.Database.EnsureCreated();
