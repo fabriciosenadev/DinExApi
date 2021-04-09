@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# SQLite extensions to be ignored
+*.sqlite
+*.db
+*.sqlite3
+*.dbsqlite
