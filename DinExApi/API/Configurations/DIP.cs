@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DinExApi.Infrastructure.DB.Data;
+using DinExApi.Persistence.Interfaces;
+using DinExApi.Persistence.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DinExApi.API.Configurations
@@ -8,6 +11,9 @@ namespace DinExApi.API.Configurations
         public static IServiceCollection DependencyInjection(this IServiceCollection services, IConfiguration configuration)
         {
             //
+            services.AddSingleton(configuration);
+
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             return services;
         }
     }

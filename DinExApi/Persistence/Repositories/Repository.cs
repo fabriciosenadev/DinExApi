@@ -16,10 +16,10 @@ namespace DinExApi.Persistence.Repositories
             DbSet = dinExContext.Set<T>();
         }
 
-        public async virtual Task AddAsync(T entity)
+        public async virtual Task<int> AddAsync(T entity)
         {
             DbSet.Add(entity);
-            await SaveChanges();
+            return await SaveChanges();
         }
 
         public async virtual Task DeleteAsync(T entity)
