@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace DinExApi.Domain.Models
 {
-    public class User
+    public class ScheduledLaunches
     {
         public int Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public Launch Launch { get; set; }
+        public string NextMonth { get; set; }
+        public User CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime DeletedAt { get; set; }

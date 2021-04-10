@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 
 namespace DinExApi.Domain.Models
 {
-    public class User
+    public class CategoryUsers
     {
         public int Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public User User { get; set; }
+        public Category Category { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
         public DateTime DeletedAt { get; set; }
     }
 }

@@ -3,14 +3,16 @@ using System;
 using DinExApi.Infrastructure.DB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DinExApi.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(DinExApiContext))]
-    partial class DinExApiContextModelSnapshot : ModelSnapshot
+    [Migration("20210410023230_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

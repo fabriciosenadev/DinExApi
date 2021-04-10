@@ -9,9 +9,13 @@ namespace DinExApi.Domain.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public Category Cotegory { get; set; }
+        public Category Category { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
-        public PayMethod? PayMehtod { get; set; }
+        public string Status { get; set; }
+        public User CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime DeletedAt { get; set; }
     }
 }
