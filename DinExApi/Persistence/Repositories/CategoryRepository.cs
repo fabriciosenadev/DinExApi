@@ -2,6 +2,7 @@
 using DinExApi.Infrastructure.DB.Data;
 using DinExApi.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DinExApi.Persistence.Repositories
@@ -10,10 +11,11 @@ namespace DinExApi.Persistence.Repositories
     {
         public CategoryRepository(DinExApiContext dinExApiContext) : base(dinExApiContext) { }
 
-        public async Task<Category> SearchAsync(int id)
+        public async Task<Category> FindByIdAsync(int id, int userID)
         {
             return await dinExContext.Category
-                .AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+                .AsNoTracking().Where(c => c.userID.Id == userID)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

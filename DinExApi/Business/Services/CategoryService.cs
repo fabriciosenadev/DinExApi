@@ -1,12 +1,14 @@
 ﻿using DinExApi.Application.Interfaces;
+using DinExApi.Business.Services;
 using DinExApi.Domain.Models;
 using DinExApi.Persistence.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DinExApi.Application.Services
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : BaseServices<Category>, ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -15,9 +17,17 @@ namespace DinExApi.Application.Services
             _categoryRepository = categoryRepository;
         }
 
-        public Task AddAsync()
+        public async Task<int> AddAsync(Category category, int userID)
         {
-            throw new System.NotImplementedException();
+            DateTime dateNow = DateTime.Now;
+
+            category.CreatedAt = dateNow;
+            category.CreatedBy = userID;
+
+            if (Validate(category))
+                return await _categoryRepository.AddAsync(category);
+
+            return 0;
         }
 
         public Task DeleteAsync()
@@ -30,9 +40,18 @@ namespace DinExApi.Application.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<Category>> SearchAsync()
+        public async Task<Category> FindByIdAsync(int id, int userID)
         {
-            throw new System.NotImplementedException();
+            return await _categoryRepository.FindByIdAsync(id, userID);
+        }
+
+        public override bool Validate(Category entity)
+        {
+            var category = FindByIdAsync(entity.Id,1); //id user logado
+
+            if (category != null) return false;
+
+            return true;
         }
     }
 }
