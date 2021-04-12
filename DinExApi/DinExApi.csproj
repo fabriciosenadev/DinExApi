@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\DB\Seeders\" />
+    <Folder Include="Infrastructure\DB\Migrations\" />
   </ItemGroup>
 
 </Project>

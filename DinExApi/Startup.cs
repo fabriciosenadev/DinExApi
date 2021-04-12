@@ -1,4 +1,5 @@
 using DinExApi.Infrastructure.DB.Data;
+using DinExApi.Infrastructure.DB.Seeders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,14 +43,21 @@ namespace DinExApi
 
             // make SQLite works
             services.AddEntityFrameworkSqlite().AddDbContext<DinExApiContext>();
+
+            //---Services---
+            services.AddScoped<SeederBaseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeederBaseService seederBaseService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                // propagations of base data in development env
+                seederBaseService.Seed();
+
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DinExApi v1"));
             }
