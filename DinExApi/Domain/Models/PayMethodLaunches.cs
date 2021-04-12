@@ -12,7 +12,7 @@ namespace DinExApi.Domain.Models
         public Launch Launch { get; set; }
         public User CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
     }
 }

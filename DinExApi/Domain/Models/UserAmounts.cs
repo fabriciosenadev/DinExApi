@@ -11,6 +11,6 @@ namespace DinExApi.Domain.Models
         public User User { get; set; }
         public decimal AmountAvailable { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

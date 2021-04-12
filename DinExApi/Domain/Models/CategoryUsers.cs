@@ -11,6 +11,6 @@ namespace DinExApi.Domain.Models
         public User User { get; set; }
         public Category Category { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
     }
 }
