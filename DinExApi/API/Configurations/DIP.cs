@@ -14,6 +14,7 @@ namespace DinExApi.API.Configurations
             services.AddSingleton(configuration);
 
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             return services;
         }
     }

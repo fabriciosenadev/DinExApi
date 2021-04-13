@@ -10,5 +10,6 @@ namespace DinExApi.Business.Services
         }
 
         public abstract bool Validate(T entity);
+        public abstract bool Validate(T entity, int userId);
     }
 }

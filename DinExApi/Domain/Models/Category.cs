@@ -9,8 +9,7 @@ namespace DinExApi.Domain.Models
         public string Applicable { get; set; } //TODO: migrar para enum
         public string IsCustom { get; set; } //TODO: migrar para enum
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
-        public User userID { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
     }
 }
