@@ -1,4 +1,6 @@
-﻿using DinExApi.Infrastructure.DB.Data;
+﻿using DinExApi.Business.Interfaces;
+using DinExApi.Business.Services;
+using DinExApi.Infrastructure.DB.Data;
 using DinExApi.Persistence.Interfaces;
 using DinExApi.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +16,6 @@ namespace DinExApi.API.Configurations
             services.AddSingleton(configuration);
 
             services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
             return services;
         }
     }
