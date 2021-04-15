@@ -1,5 +1,9 @@
+using DinExApi.Business.Interfaces;
+using DinExApi.Business.Services;
 using DinExApi.Infrastructure.DB.Data;
 using DinExApi.Infrastructure.DB.Seeders;
+using DinExApi.Persistence.Interfaces;
+using DinExApi.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,10 +27,10 @@ namespace DinExApi
             Configuration = configuration;
             
             // make works SQLite based on context - replace a standard constructor
-            using (var client = new DinExApiContext())
-            {
-                client.Database.EnsureCreated();
-            }
+            //using (var client = new DinExApiContext())
+            //{
+            //    client.Database.EnsureCreated();
+            //}
         }
 
         public IConfiguration Configuration { get; }
@@ -46,6 +50,14 @@ namespace DinExApi
 
             //---Services---
             services.AddScoped<SeederBaseService>();
+
+            //---necessary to migrate to dependecy after this is ready---
+            #region Services
+            services.AddScoped<IUserService, UserService>();
+            #endregion
+            #region Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
