@@ -1,7 +1,6 @@
 ﻿using DinExApi.Domain.Models;
 using DinExApi.Infrastructure.DB.Data;
 using DinExApi.Persistence.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +8,24 @@ using System.Threading.Tasks;
 
 namespace DinExApi.Persistence.Repositories
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : IUserRepository
     {
-        public UserRepository(DinExApiContext dinExApiContext) : base(dinExApiContext) { }
+        private readonly DinExApiContext _context;
 
-        public async Task<User> FindByEmailAsync(string email)
+        public UserRepository(DinExApiContext context)
         {
-            return await dinExContext.User.FirstOrDefaultAsync(u => u.Email == email);
+            _context = context;
         }
 
-        public async Task<User> FindByIdAsync(int userId)
+        public async Task AddAsync(User user)
         {
-            return await dinExContext.User.FirstOrDefaultAsync(u => u.Id == userId);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> GetUser(int userId)
+        {
+            return await _context.Users.FindAsync(userId); ;
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DinExApi.Persistence.Interfaces
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository
     {
-        Task<User> FindByIdAsync(int userId);
-        Task<User> FindByEmailAsync(string email);
+        Task AddAsync(User user);
+        Task<User> GetUser(int userId);
     }
 }

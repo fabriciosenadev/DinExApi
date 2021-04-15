@@ -8,9 +8,7 @@ namespace DinExApi.Business.Interfaces
 {
     public interface IUserService
     {
-        Task<int> AddAsync(User user);
-        Task UpdateAsync(int userId, string password);
-        Task DeleteAsync(int userId);
-        Task<User> FindByIdAsync(int userId);
+        Task AddAsync(User user);
+        Task<User> GetUser(int id);
     }
 }

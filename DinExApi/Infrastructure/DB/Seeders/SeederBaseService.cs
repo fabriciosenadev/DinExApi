@@ -17,7 +17,7 @@ namespace DinExApi.Infrastructure.DB.Seeders
 
         public void Seed()
         {
-            if (_context.Category.Any() || _context.PayMethod.Any())
+            if (_context.Categories.Any() || _context.PayMethods.Any())
                 return; // break execution of seeder
 
             #region Pay Methods
@@ -37,8 +37,8 @@ namespace DinExApi.Infrastructure.DB.Seeders
             #endregion
 
             #region saving data
-            _context.PayMethod.AddRange(money, debit, credit);
-            _context.Category.AddRange(salary, food, beauty, education, fun, health, transport);
+            _context.PayMethods.AddRange(money, debit, credit);
+            _context.Categories.AddRange(salary, food, beauty, education, fun, health, transport);
             _context.SaveChanges();
             #endregion
         }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DinExApi.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(DinExApiContext))]
-    [Migration("20210412010640_Initial")]
+    [Migration("20210414122639_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace DinExApi.Infrastructure.DB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("DinExApi.Domain.Models.CategoryUsers", b =>
@@ -118,7 +118,7 @@ namespace DinExApi.Infrastructure.DB.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Launch");
+                    b.ToTable("Launches");
                 });
 
             modelBuilder.Entity("DinExApi.Domain.Models.PayMethod", b =>
@@ -137,7 +137,7 @@ namespace DinExApi.Infrastructure.DB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PayMethod");
+                    b.ToTable("PayMethods");
                 });
 
             modelBuilder.Entity("DinExApi.Domain.Models.PayMethodLaunches", b =>
@@ -238,7 +238,7 @@ namespace DinExApi.Infrastructure.DB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DinExApi.Domain.Models.UserAmounts", b =>

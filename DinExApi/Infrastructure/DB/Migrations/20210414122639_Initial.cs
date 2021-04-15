@@ -8,7 +8,7 @@ namespace DinExApi.Infrastructure.DB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -22,11 +22,11 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PayMethod",
+                name: "PayMethods",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -36,11 +36,11 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PayMethod", x => x.Id);
+                    table.PrimaryKey("PK_PayMethods", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -54,7 +54,7 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,21 +72,21 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 {
                     table.PrimaryKey("PK_CategoryUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CategoryUsers_Category_CategoryId",
+                        name: "FK_CategoryUsers_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CategoryUsers_User_UserId",
+                        name: "FK_CategoryUsers_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Launch",
+                name: "Launches",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -103,17 +103,17 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Launch", x => x.Id);
+                    table.PrimaryKey("PK_Launches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Launch_Category_CategoryId",
+                        name: "FK_Launches_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Launch_User_CreatedById",
+                        name: "FK_Launches_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -133,9 +133,9 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 {
                     table.PrimaryKey("PK_UserAmounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAmounts_User_UserId",
+                        name: "FK_UserAmounts_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -157,21 +157,21 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 {
                     table.PrimaryKey("PK_PayMethodLaunches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PayMethodLaunches_Launch_LaunchId",
+                        name: "FK_PayMethodLaunches_Launches_LaunchId",
                         column: x => x.LaunchId,
-                        principalTable: "Launch",
+                        principalTable: "Launches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PayMethodLaunches_PayMethod_PayMethodId",
+                        name: "FK_PayMethodLaunches_PayMethods_PayMethodId",
                         column: x => x.PayMethodId,
-                        principalTable: "PayMethod",
+                        principalTable: "PayMethods",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PayMethodLaunches_User_CreatedById",
+                        name: "FK_PayMethodLaunches_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -193,15 +193,15 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 {
                     table.PrimaryKey("PK_ScheduledLaunches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ScheduledLaunches_Launch_LaunchId",
+                        name: "FK_ScheduledLaunches_Launches_LaunchId",
                         column: x => x.LaunchId,
-                        principalTable: "Launch",
+                        principalTable: "Launches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ScheduledLaunches_User_CreatedById",
+                        name: "FK_ScheduledLaunches_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -217,13 +217,13 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Launch_CategoryId",
-                table: "Launch",
+                name: "IX_Launches_CategoryId",
+                table: "Launches",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Launch_CreatedById",
-                table: "Launch",
+                name: "IX_Launches_CreatedById",
+                table: "Launches",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
@@ -272,16 +272,16 @@ namespace DinExApi.Infrastructure.DB.Migrations
                 name: "UserAmounts");
 
             migrationBuilder.DropTable(
-                name: "PayMethod");
+                name: "PayMethods");
 
             migrationBuilder.DropTable(
-                name: "Launch");
+                name: "Launches");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }
