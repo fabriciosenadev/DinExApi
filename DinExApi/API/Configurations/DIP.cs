@@ -1,5 +1,6 @@
 ﻿using DinExApi.Business.Interfaces;
 using DinExApi.Business.Services;
+using DinExApi.Infrastructure.DB.Seeders;
 using DinExApi.Persistence.Interfaces;
 using DinExApi.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,10 @@ namespace DinExApi.API.Configurations
             //
             services.AddSingleton(configuration);
 
-            //services.AddTransient<ICategoryRepository, CategoryRepository>();
+            #region Seeders
+            services.AddScoped<SeederBaseService>();
+            #endregion
+
             #region Services
             services.AddScoped<IUserService, UserService>();
             #endregion

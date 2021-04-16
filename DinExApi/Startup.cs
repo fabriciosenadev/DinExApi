@@ -39,8 +39,8 @@ namespace DinExApi
             // make SQLite works
             services.AddEntityFrameworkSqlite().AddDbContext<DinExApiContext>();
 
-            //---Service to seed---
-            services.AddScoped<SeederBaseService>();
+            ////---Service to seed---
+            //services.AddScoped<SeederBaseService>();
             
             services.DependencyInjection(Configuration);
         }
