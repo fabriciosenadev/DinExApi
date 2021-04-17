@@ -5,6 +5,6 @@ namespace DinExApi.Persistence.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        Task<Category> FindByIdAsync(int id, int userID);
+        Task<Category> FindByIdAsync(int id);
     }
 }

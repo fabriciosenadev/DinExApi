@@ -38,7 +38,7 @@ namespace DinExApi.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _userService.GetUser(id);
+            var user = await _userService.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -82,10 +82,9 @@ namespace DinExApi.API.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<object>> PostUser(User user)
         {
-            await _userService.AddAsync(user);
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+             return await _userService.AddAsync(user);
         }
 
         // DELETE: api/Users/5
