@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DinExApi.Application.Services
+namespace DinExApi.Business.Services
 {
     public class CategoryService : BaseServices<Category>, ICategoryService
     {

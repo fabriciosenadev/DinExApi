@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DinExApi.Application.Interfaces
+namespace DinExApi.Business.Interfaces
 {
     public interface ICategoryService
     {
