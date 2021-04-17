@@ -8,6 +8,6 @@ namespace DinExApi.Persistence.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> GetUser(int userId);
+        Task<User> FindByIdAsync(int userId);
     }
 }

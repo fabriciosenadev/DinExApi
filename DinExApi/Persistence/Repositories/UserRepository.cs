@@ -12,7 +12,7 @@ namespace DinExApi.Persistence.Repositories
     {
         public UserRepository(DinExApiContext context) : base(context) { }
 
-        public async Task<User> GetUser(int userId)
+        public async Task<User> FindByIdAsync(int userId)
         {
             return await dinExContext.Users.FindAsync(userId); ;
         }

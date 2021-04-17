@@ -18,14 +18,18 @@ namespace DinExApi.Business.Services
             _userRepository = userRepository;
         }
 
-        public async Task AddAsync(User user)
+        public async Task<object> AddAsync(User user)
         {
+            user.CreatedAt = DateTime.Now;
+            
             await _userRepository.AddAsync(user);
+
+            return user;
         }
 
-        public async Task<User> GetUser(int userId)
+        public async Task<User> FindByIdAsync(int userId)
         {
-            return await _userRepository.GetUser(userId);
+            return await _userRepository.FindByIdAsync(userId);
         }
     }
 }
