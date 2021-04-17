@@ -39,5 +39,13 @@ namespace DinExApi.API.Controllers
 
             return category;
         }
+
+        // POST: api/Categories
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<object>> PostUser(Category category, int userId)
+        {
+            return await _categoryService.AddAsync(category, userId);
+        }
     }
 }

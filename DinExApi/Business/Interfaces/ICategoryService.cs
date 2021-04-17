@@ -7,8 +7,7 @@ namespace DinExApi.Application.Interfaces
     public interface ICategoryService
     {
         Task<Category> FindByIdAsync(int id, int userID);
-        Task<int> AddAsync(Category category, int usuarioID);
-        Task DeleteAsync();
+        Task<object> AddAsync(Category category, int userId);
         Task<IEnumerable<Category>> FindAllAsync();
     }
 }

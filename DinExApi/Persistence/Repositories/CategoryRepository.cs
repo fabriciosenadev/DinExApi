@@ -11,11 +11,9 @@ namespace DinExApi.Persistence.Repositories
     {
         public CategoryRepository(DinExApiContext dinExApiContext) : base(dinExApiContext) { }
 
-        public async Task<Category> FindByIdAsync(int id, int userID)
+        public async Task<Category> FindByIdAsync(int id)
         {
-            return await dinExContext.Category
-                .AsNoTracking().Where(c => c.userID.Id == userID)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            return await dinExContext.Categories.FindAsync(id);
         }
     }
 }
