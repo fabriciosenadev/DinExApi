@@ -22,7 +22,7 @@ namespace DinExApi.API.Configurations
             #region Services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
-            //services.AddScoped<ICategoryUserService, CategoryUserService>();
+            services.AddTransient<ICategoryUserService, CategoryUserService>();
             #endregion
 
             #region Repositories

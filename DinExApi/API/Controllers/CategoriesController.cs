@@ -17,11 +17,13 @@ namespace DinExApi.API.Controllers
     {
         private readonly DinExApiContext _context;
         private readonly ICategoryService _categoryService;
+        private readonly ICategoryUserService _categoryUserService;
 
-        public CategoriesController(DinExApiContext context, ICategoryService categoryService)
+        public CategoriesController(DinExApiContext context, ICategoryService categoryService, ICategoryUserService categoryUserService)
         {
             _context = context;
             _categoryService = categoryService;
+            _categoryUserService = categoryUserService;
         }
 
         // GET: api/Categories
@@ -81,7 +83,14 @@ namespace DinExApi.API.Controllers
         [HttpPost]
         public async Task<ActionResult<object>> PostCategory(Category category, int userId)
         {
-            return await _categoryService.AddAsync(category, userId);
+            var result = await _categoryService.AddAsync(category, userId);
+            
+            if (category.Id > 0)
+            {
+                var newRelation = await _categoryUserService.AddRelationAsync(category.Id, userId);
+            }
+
+            return result;
         }
 
         // DELETE: api/Categories/5
