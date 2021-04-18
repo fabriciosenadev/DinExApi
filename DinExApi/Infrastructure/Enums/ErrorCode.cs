@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DinExApi.Infrastructure.Enums
 {
-    enum ErrorCode
+    public enum ErrorCode
     {
         // if there is no error
         Empty = 0,
