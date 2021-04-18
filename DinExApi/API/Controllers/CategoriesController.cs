@@ -47,50 +47,12 @@ namespace DinExApi.API.Controllers
             return category;
         }
 
-        // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCategory(int id, Category category)
-        //{
-        //    if (id != category.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(category).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!CategoryExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<object>> PostCategory(Category category, int userId)
         {
-            var result = await _categoryService.AddAsync(category, userId);
-            
-            if (category.Id > 0)
-            {
-                var newRelation = await _categoryUserService.AddRelationAsync(category.Id, userId);
-            }
-
-            return result;
+            return await _categoryService.AddAsync(category, userId);
         }
 
         // DELETE: api/Categories/5
@@ -109,9 +71,9 @@ namespace DinExApi.API.Controllers
             return NoContent();
         }
 
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
-        }
+        //private bool CategoryExists(int id)
+        //{
+        //    return _context.Categories.Any(e => e.Id == id);
+        //}
     }
 }
