@@ -43,7 +43,7 @@ namespace DinExApi.Business.Services
         {
             var hasAlreadyExists = FindByNameAsync(entity.Name);
 
-            if (hasAlreadyExists == null) return false;
+            if (hasAlreadyExists.Result == null) return false;
 
             return true;
         }
