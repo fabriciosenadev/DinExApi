@@ -13,12 +13,12 @@ namespace DinExApi.Business.Services
     public class CategoryService : BaseServices<Category>, ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        //private readonly ICategoryUserService _categoryUserService;
-        //private readonly IUserService _userService;
-
-        public CategoryService(ICategoryRepository categoryRepository)
+        private readonly ICategoryUserService _categoryUserService;
+        
+        public CategoryService(ICategoryRepository categoryRepository, ICategoryUserService categoryUserService)
         {
             _categoryRepository = categoryRepository;
+            _categoryUserService = categoryUserService;
         }
 
         public async Task<object> AddAsync(Category category, int userId)
@@ -30,6 +30,8 @@ namespace DinExApi.Business.Services
             
             if (isRegistered != 1)
                 return new { errorCode = ErrorCode.ErrorToSave };
+
+            var isRelationated = await AddRelationCategoryToUser(category.Id, userId);
 
             return category;
         }
@@ -43,7 +45,7 @@ namespace DinExApi.Business.Services
         {
             var hasAlreadyExists = FindByNameAsync(entity.Name);
 
-            if (hasAlreadyExists == null) return false;
+            if (hasAlreadyExists.Result == null) return false;
 
             return true;
         }
@@ -58,20 +60,10 @@ namespace DinExApi.Business.Services
             return await _categoryRepository.FindByNameAsync(categoryName);
         }
 
-        //private async Task<object> AddRelationCategoryToUser(Category category, int userId)
-        //{
-        //    User user = await FindUserById(userId);
-
-        //    //CategoryUsers.Category = category;
-        //    //CategoryUsers.User = user;
-
-        //    //return await _categoryUserService.AddAsync(CategoryUsers);
-        //    return await _categoryUserService.AddRelationAsync(category, user);
-        //}
-
-        //private async Task<User> FindUserById(int userId)
-        //{
-        //    return await _userService.FindByIdAsync(userId);
-        //}
+        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId)
+        {
+            var result = await _categoryUserService.AddRelationAsync(categoryId, userId);
+            return result;
+        }
     }
 }

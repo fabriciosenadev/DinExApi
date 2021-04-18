@@ -20,14 +20,14 @@ namespace DinExApi.API.Configurations
             #endregion
 
             #region Services
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            //services.AddScoped<ICategoryUserService, CategoryUserService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICategoryUserService, CategoryUserService>();
             #endregion
 
             #region Repositories
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             #endregion
 
             return services;

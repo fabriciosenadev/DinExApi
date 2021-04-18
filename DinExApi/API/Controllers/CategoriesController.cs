@@ -17,11 +17,13 @@ namespace DinExApi.API.Controllers
     {
         private readonly DinExApiContext _context;
         private readonly ICategoryService _categoryService;
+        private readonly ICategoryUserService _categoryUserService;
 
-        public CategoriesController(DinExApiContext context, ICategoryService categoryService)
+        public CategoriesController(DinExApiContext context, ICategoryService categoryService, ICategoryUserService categoryUserService)
         {
             _context = context;
             _categoryService = categoryService;
+            _categoryUserService = categoryUserService;
         }
 
         // GET: api/Categories
@@ -44,37 +46,6 @@ namespace DinExApi.API.Controllers
 
             return category;
         }
-
-        // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCategory(int id, Category category)
-        //{
-        //    if (id != category.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(category).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!CategoryExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
 
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -100,9 +71,9 @@ namespace DinExApi.API.Controllers
             return NoContent();
         }
 
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
-        }
+        //private bool CategoryExists(int id)
+        //{
+        //    return _context.Categories.Any(e => e.Id == id);
+        //}
     }
 }
