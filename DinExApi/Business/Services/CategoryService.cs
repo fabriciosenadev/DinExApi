@@ -14,7 +14,7 @@ namespace DinExApi.Business.Services
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICategoryUserService _categoryUserService;
-        
+
         public CategoryService(ICategoryRepository categoryRepository, ICategoryUserService categoryUserService)
         {
             _categoryRepository = categoryRepository;
@@ -23,15 +23,18 @@ namespace DinExApi.Business.Services
 
         public async Task<object> AddAsync(Category category, int userId)
         {
-            if (Validate(category))
-                return new { errorCode = ErrorCode.HasAlreadyExists };
+            if (!Validate(category))
+            {
+                var isRegistered = await _categoryRepository.AddAsync(category);
 
-            var isRegistered = await _categoryRepository.AddAsync(category);
-            
-            if (isRegistered != 1)
-                return new { errorCode = ErrorCode.ErrorToSave };
+                if (isRegistered != 1)
+                    return new { errorCode = ErrorCode.ErrorToSave };
+            }
 
-            var isRelationated = await AddRelationCategoryToUser(category.Id, userId);
+            var hasError = await AddRelationCategoryToUser(category.Id, userId);
+
+            if (hasError != ErrorCode.Empty)
+                return new { errorCode = hasError };
 
             return category;
         }
@@ -62,8 +65,7 @@ namespace DinExApi.Business.Services
 
         private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId)
         {
-            var result = await _categoryUserService.AddRelationAsync(categoryId, userId);
-            return result;
+            return await _categoryUserService.AddRelationAsync(categoryId, userId);
         }
     }
 }
