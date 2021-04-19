@@ -23,35 +23,45 @@ namespace DinExApi.Business.Services
             _context = context;
             _categoryUserRepository = categoryUserRepository;
         }
+
         public async Task<ErrorCode> AddRelationAsync(int categoryId, int userId)
         {
             CategoryUsers categoryUsers = new CategoryUsers();
 
-            categoryUsers.Category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
-            categoryUsers.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            categoryUsers.Category = await FindCategoryByIdAsync(categoryId);
+            categoryUsers.User = await FindUserByIdAsync(userId);
 
-            await _context.CategoryUsers.AddAsync(categoryUsers);
-            var result = await _context.SaveChangesAsync();
+            if (Validate(categoryUsers)) return ErrorCode.HasAlreadyExists;
 
-            if (result != 1)
-            {
-                return ErrorCode.ErrorToSave;
-            }
+            var result = await _categoryUserRepository.AddRelationAsync(categoryUsers);
+
+            if (result != 1) return ErrorCode.ErrorToSave;
 
             return ErrorCode.Empty;
-            
-
         }
 
 
         public override bool Validate(CategoryUsers entity)
         {
-            throw new NotImplementedException();
+            var hasAlreadyExists = _categoryUserRepository.FindRelationAsync(entity.Category.Id, entity.User.Id);
+            if (hasAlreadyExists.Result == null) return false;
+
+            return true;
         }
 
         public override bool Validate(CategoryUsers entity, int userId)
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<User> FindUserByIdAsync(int userId)
+        {
+            return await _categoryUserRepository.FindUserByIdAsync(userId);
+        }
+
+        private async Task<Category> FindCategoryByIdAsync(int categoryId)
+        {
+            return await _categoryUserRepository.FindCategoryByIdAsync(categoryId);
         }
     }
 }

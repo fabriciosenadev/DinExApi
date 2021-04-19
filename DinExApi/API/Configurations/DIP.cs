@@ -28,6 +28,7 @@ namespace DinExApi.API.Configurations
             #region Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoryUserRepository, CategoryUserRepository>();
             #endregion
 
             return services;
