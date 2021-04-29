@@ -2,7 +2,7 @@
 {
     public interface IBaseServices<T> where T : class
     {
-        bool Validate(T entity);
-        bool Validate(T entity, int userId);
+        bool Exists(T entity);
+        //bool Validate(T entity, int userId);
     }
 }

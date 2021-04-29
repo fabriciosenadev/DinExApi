@@ -21,51 +21,51 @@ namespace DinExApi.Business.Services
             _categoryUserService = categoryUserService;
         }
 
-        public async Task<object> AddAsync(Category category, int userId)
+        public async Task<object> ComposeCategoryCreation(Category category, int userId)
         {
-            if (!Validate(category))
-            {
-                var isRegistered = await _categoryRepository.AddAsync(category);
+            ErrorCode hasError;
 
-                if (isRegistered != 1)
-                    return new { errorCode = ErrorCode.ErrorToSave };
+            if (!Exists(category))
+            {
+                hasError = await AddAsync(category);
+                if (hasError != ErrorCode.Empty) 
+                    return new { errorCode = hasError };
+            }
+            else
+            {
+                var c = await FindByNameAsync(category.Name);
+                category.Id = c.Id;
             }
 
-            var hasError = await AddRelationCategoryToUser(category.Id, userId);
-
-            if (hasError != ErrorCode.Empty)
+            hasError = await AddRelationCategoryToUser(category.Id, userId);            
+            if (hasError != ErrorCode.Empty) 
                 return new { errorCode = hasError };
 
             return category;
         }
 
-        public async Task<Category> FindByIdAsync(int categoryId)
+        public async Task<ErrorCode> AddAsync(Category category)
         {
-            return await _categoryRepository.FindByIdAsync(categoryId);
+            var isRegistered = await _categoryRepository.AddAsync(category);
+
+            if (isRegistered != 1) return ErrorCode.ErrorToSave;
+
+            return ErrorCode.Empty;
         }
 
-        public override bool Validate(Category entity)
+        public async Task<Category> FindByIdAsync(int categoryId) => await _categoryRepository.FindByIdAsync(categoryId);
+
+        private async Task<Category> FindByNameAsync(string categoryName) => await _categoryRepository.FindByNameAsync(categoryName);
+
+        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId) => await _categoryUserService.AddRelationAsync(categoryId, userId);
+
+        public override bool Exists(Category category)
         {
-            var hasAlreadyExists = FindByNameAsync(entity.Name);
+            var hasAlreadyExists = FindByNameAsync(category.Name);
 
             if (hasAlreadyExists.Result == null) return false;
 
             return true;
-        }
-
-        public override bool Validate(Category entity, int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        private async Task<Category> FindByNameAsync(string categoryName)
-        {
-            return await _categoryRepository.FindByNameAsync(categoryName);
-        }
-
-        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId)
-        {
-            return await _categoryUserService.AddRelationAsync(categoryId, userId);
         }
     }
 }

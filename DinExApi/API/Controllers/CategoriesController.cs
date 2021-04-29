@@ -52,7 +52,7 @@ namespace DinExApi.API.Controllers
         [HttpPost]
         public async Task<ActionResult<object>> PostCategory(Category category, int userId)
         {
-            return await _categoryService.AddAsync(category, userId);
+            return await _categoryService.ComposeCategoryCreation(category, userId);
         }
 
         // DELETE: api/Categories/5
