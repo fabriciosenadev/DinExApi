@@ -57,7 +57,7 @@ namespace DinExApi.Business.Services
 
         private async Task<Category> FindByNameAsync(string categoryName) => await _categoryRepository.FindByNameAsync(categoryName);
 
-        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId) => await _categoryUserService.AddRelationAsync(categoryId, userId);
+        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId) => await _categoryUserService.ComposeRelationCreationAsync(categoryId, userId);
 
         public override bool Exists(Category category)
         {

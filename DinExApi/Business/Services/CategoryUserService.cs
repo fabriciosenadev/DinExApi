@@ -24,34 +24,41 @@ namespace DinExApi.Business.Services
             _categoryUserRepository = categoryUserRepository;
         }
 
-        public async Task<ErrorCode> AddRelationAsync(int categoryId, int userId)
+        public async Task<ErrorCode> ComposeRelationCreationAsync(int categoryId, int userId)
         {
             CategoryUsers categoryUsers = new CategoryUsers();
 
             categoryUsers.Category = await FindCategoryByIdAsync(categoryId);
             categoryUsers.User = await FindUserByIdAsync(userId);
 
-            if (Validate(categoryUsers)) return ErrorCode.HasAlreadyExists;
+            if (Exists(categoryUsers))
+                return ErrorCode.HasAlreadyExists;
 
+            var hasError = await AddRelationAsync(categoryUsers);
+            
+            if (hasError != ErrorCode.Empty)
+                return ErrorCode.ErrorToSave;
+
+            return ErrorCode.Empty;
+        }
+
+        public async Task<ErrorCode> AddRelationAsync(CategoryUsers categoryUsers)
+        {
             var result = await _categoryUserRepository.AddRelationAsync(categoryUsers);
 
-            if (result != 1) return ErrorCode.ErrorToSave;
+            if (result != 1) 
+                return ErrorCode.ErrorToSave;
 
             return ErrorCode.Empty;
         }
 
 
-        public override bool Validate(CategoryUsers entity)
+        public override bool Exists(CategoryUsers entity)
         {
             var hasAlreadyExists = _categoryUserRepository.FindRelationAsync(entity.Category.Id, entity.User.Id);
             if (hasAlreadyExists.Result == null) return false;
 
             return true;
-        }
-
-        public override bool Validate(CategoryUsers entity, int userId)
-        {
-            throw new NotImplementedException();
         }
 
         private async Task<User> FindUserByIdAsync(int userId)
