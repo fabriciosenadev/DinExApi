@@ -10,5 +10,6 @@ namespace DinExApi.Persistence.Interfaces
     {
         Task<Category> FindByIdAsync(int categoryId);
         Task<Category> FindByNameAsync(string categoryName);
+        Task<IEnumerable<Category>> FindAllStandardAsync();
     }
 }

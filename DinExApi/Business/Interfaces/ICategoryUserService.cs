@@ -9,6 +9,7 @@ namespace DinExApi.Business.Interfaces
 {
     public interface ICategoryUserService
     {
-        Task<ErrorCode> AddRelationAsync(int categoryId, int userId);
+        Task<ErrorCode> ComposeRelationCreationAsync(int categoryId, int userId);
+        Task<ErrorCode> AddRelationAsync(CategoryUsers categoryUsers);
     }
 }

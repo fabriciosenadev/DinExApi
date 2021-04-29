@@ -57,7 +57,7 @@ namespace DinExApi.Business.Services
 
         private async Task<Category> FindByNameAsync(string categoryName) => await _categoryRepository.FindByNameAsync(categoryName);
 
-        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId) => await _categoryUserService.AddRelationAsync(categoryId, userId);
+        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId) => await _categoryUserService.ComposeRelationCreationAsync(categoryId, userId);
 
         public override bool Exists(Category category)
         {
@@ -66,6 +66,11 @@ namespace DinExApi.Business.Services
             if (hasAlreadyExists.Result == null) return false;
 
             return true;
+        }
+
+        public async Task<IEnumerable<Category>> FindAllStandardAsync()
+        {
+            return await _categoryRepository.FindAllStandardAsync();
         }
     }
 }
