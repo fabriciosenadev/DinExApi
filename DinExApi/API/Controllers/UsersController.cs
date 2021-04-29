@@ -84,7 +84,7 @@ namespace DinExApi.API.Controllers
         [HttpPost]
         public async Task<ActionResult<object>> PostUser(User user)
         {
-             return await _userService.AddAsync(user);
+             return await _userService.ComposeUserCreation(user);
         }
 
         // DELETE: api/Users/5
