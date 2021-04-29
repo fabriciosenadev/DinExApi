@@ -12,5 +12,6 @@ namespace DinExApi.Business.Interfaces
         Task<object> ComposeCategoryCreation(Category category, int userId);
         Task<ErrorCode> AddAsync(Category category);
         Task<Category> FindByIdAsync(int categoryId);
+        Task<IEnumerable<Category>> FindAllStandardAsync();
     }
 }

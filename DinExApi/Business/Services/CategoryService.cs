@@ -67,5 +67,10 @@ namespace DinExApi.Business.Services
 
             return true;
         }
+
+        public async Task<IEnumerable<Category>> FindAllStandardAsync()
+        {
+            return await _categoryRepository.FindAllStandardAsync();
+        }
     }
 }

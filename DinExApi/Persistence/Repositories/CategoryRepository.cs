@@ -15,6 +15,11 @@ namespace DinExApi.Persistence.Repositories
         {
         }
 
+        public async Task<IEnumerable<Category>> FindAllStandardAsync()
+        {
+            return await dinExContext.Categories.Where(c => c.IsCustom == "no").ToListAsync();
+        }
+
         public async Task<Category> FindByIdAsync(int categoryId)
         {
             return await dinExContext.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
