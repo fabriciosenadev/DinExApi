@@ -1,4 +1,5 @@
 ﻿using DinExApi.Domain.Models;
+using DinExApi.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ namespace DinExApi.Business.Interfaces
 {
     public interface ICategoryService
     {
-        Task<object> AddAsync(Category category, int userId);
+        Task<object> ComposeCategoryCreation(Category category, int userId);
+        Task<ErrorCode> AddAsync(Category category);
         Task<Category> FindByIdAsync(int categoryId);
     }
 }
