@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using DinExApi.API.DTO;
+using DinExApi.Business.Interfaces;
 using DinExApi.Domain.Models;
-using DinExApi.Infrastructure.DB.Data;
+using DinExApi.Infrastructure.Enums;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DinExApi.API.Controllers
 {
@@ -14,60 +13,46 @@ namespace DinExApi.API.Controllers
     [ApiController]
     public class LaunchesController : ControllerBase
     {
-        private readonly DinExApiContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILaunchService _launchService;
 
-        public LaunchesController(DinExApiContext context)
+        public LaunchesController(IMapper mapper, ILaunchService launchService)
         {
-            _context = context;
+            _mapper = mapper;
+            _launchService = launchService;
         }
 
         // GET: api/Launches
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Launch>>> GetLaunch()
+        public async Task<IActionResult> GetLaunch()
         {
-            return await _context.Launch.ToListAsync();
+            var launches = _mapper.Map<IEnumerable<Launch>>(await _launchService.FindAllAsync());
+
+            return Ok(launches);
         }
 
         // GET: api/Launches/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Launch>> GetLaunch(int id)
+        public async Task<IActionResult> GetLaunch(int id)
         {
-            var launch = await _context.Launch.FindAsync(id);
+            var launch = await _launchService.FindByIdAsync(id);
 
             if (launch == null)
             {
                 return NotFound();
             }
 
-            return launch;
+            return Ok(launch);
         }
 
         // PUT: api/Launches/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLaunch(int id, Launch launch)
+        public async Task<IActionResult> PutLaunch(int id, LaunchDTO launch)
         {
             if (id != launch.Id)
             {
                 return BadRequest();
-            }
-
-            _context.Entry(launch).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LaunchExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return NoContent();
@@ -76,33 +61,24 @@ namespace DinExApi.API.Controllers
         // POST: api/Launches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Launch>> PostLaunch(Launch launch)
+        public async Task<IActionResult> PostLaunch(LaunchDTO launchDTO)
         {
-            _context.Launch.Add(launch);
-            await _context.SaveChangesAsync();
+            var launch = _mapper.Map<Launch>(launchDTO);
+            await _launchService.AddAsync(launch);
 
-            return CreatedAtAction("GetLaunch", new { id = launch.Id }, launch);
+            return Ok();
         }
 
         // DELETE: api/Launches/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLaunch(int id)
         {
-            var launch = await _context.Launch.FindAsync(id);
-            if (launch == null)
-            {
-                return NotFound();
-            }
+            var launch = await _launchService.DeleteAsync(id);
 
-            _context.Launch.Remove(launch);
-            await _context.SaveChangesAsync();
+            if (launch == ErrorCode.Empty)
+                return Ok();
 
-            return NoContent();
-        }
-
-        private bool LaunchExists(int id)
-        {
-            return _context.Launch.Any(e => e.Id == id);
+            return BadRequest();
         }
     }
 }
