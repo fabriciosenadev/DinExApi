@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DinExApi.Infrastructure.Enums
+﻿namespace DinExApi.Infrastructure.Enums
 {
     public enum ErrorCode
     {
@@ -13,5 +8,7 @@ namespace DinExApi.Infrastructure.Enums
         // if any structural error happens
         ErrorToSave = 1,
         HasAlreadyExists = 2,
+        ErrorToDel = 3,
+        NotFound = 4
     }
 }

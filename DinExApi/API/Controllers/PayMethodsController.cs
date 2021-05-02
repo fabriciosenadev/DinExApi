@@ -25,14 +25,14 @@ namespace DinExApi.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PayMethod>>> GetPayMethod()
         {
-            return await _context.PayMethod.ToListAsync();
+            return await _context.PayMethods.ToListAsync();
         }
 
         // GET: api/PayMethods/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PayMethod>> GetPayMethod(int id)
         {
-            var payMethod = await _context.PayMethod.FindAsync(id);
+            var payMethod = await _context.PayMethods.FindAsync(id);
 
             if (payMethod == null)
             {
@@ -78,7 +78,7 @@ namespace DinExApi.API.Controllers
         [HttpPost]
         public async Task<ActionResult<PayMethod>> PostPayMethod(PayMethod payMethod)
         {
-            _context.PayMethod.Add(payMethod);
+            _context.PayMethods.Add(payMethod);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPayMethod", new { id = payMethod.Id }, payMethod);
@@ -88,13 +88,13 @@ namespace DinExApi.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePayMethod(int id)
         {
-            var payMethod = await _context.PayMethod.FindAsync(id);
+            var payMethod = await _context.PayMethods.FindAsync(id);
             if (payMethod == null)
             {
                 return NotFound();
             }
 
-            _context.PayMethod.Remove(payMethod);
+            _context.PayMethods.Remove(payMethod);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace DinExApi.API.Controllers
 
         private bool PayMethodExists(int id)
         {
-            return _context.PayMethod.Any(e => e.Id == id);
+            return _context.PayMethods.Any(e => e.Id == id);
         }
     }
 }
