@@ -61,10 +61,10 @@ namespace DinExApi.API.Controllers
         // POST: api/Launches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> PostLaunch(LaunchDTO launchDTO)
+        public async Task<IActionResult> PostLaunch(LaunchDTO launchDTO, int userId)
         {
             var launch = _mapper.Map<Launch>(launchDTO);
-            await _launchService.AddAsync(launch);
+            await _launchService.ComposeLaunchCreation(launch, userId);
 
             return Ok();
         }
