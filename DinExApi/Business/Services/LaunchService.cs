@@ -17,6 +17,12 @@ namespace DinExApi.Business.Services
             _launchRepository = launchRepository;
         }
 
+        public async Task<object> ComposeLaunchCreation(Launch launch, int userId)
+        {
+            // need to be implemented all rule of launch creation
+            return launch;
+        }
+
         public async Task<ErrorCode> AddAsync(Launch launch)
         {
             var isRegistered = await _launchRepository.AddAsync(launch);
