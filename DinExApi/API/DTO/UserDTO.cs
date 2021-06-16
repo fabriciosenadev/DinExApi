@@ -11,5 +11,6 @@ namespace DinExApi.API.DTO
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string VerifyPass { get; set; }
     }
 }
