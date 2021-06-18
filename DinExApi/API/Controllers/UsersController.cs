@@ -86,12 +86,22 @@ namespace DinExApi.API.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> PostUser(UserDTO userDTO)
+        public async Task<IActionResult> Create(UserDTO userDTO)
         {
-            var user = _mapper.Map<User>(userDTO);
-            var result =  await _userService.ComposeUserCreation(user);
-
-            return Ok(result);
+            try
+            {
+                var user = _mapper.Map<User>(userDTO);
+                var newUser = await _userService.ComposeUserCreation(user) as User;
+                if (newUser != null)
+                    userDTO.Id = newUser.Id;
+                
+                return Ok(userDTO);
+            }
+            catch (Exception e)
+            {
+                var ex = e;
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         // DELETE: api/Users/5

@@ -25,36 +25,35 @@ namespace DinExApi.Business.Services
 
         public async Task<object> ComposeUserCreation(User user)
         {
-            ErrorCode hasError;
-
-            if (Exists(user))
-                return new { errorCode = ErrorCode.HasAlreadyExists };
-
-            hasError = await AddAsync(user);
-            if (hasError != ErrorCode.Empty)
-                return new { errorCode = hasError };
-
-            IEnumerable<Category> list = await FindAllStandardCategories();
-            foreach (Category category in list)
+            try
             {
-                hasError = await AddRelationCategoryToUser(category.Id, user.Id);
-                if (hasError != ErrorCode.Empty)
-                    return new { errorCode = hasError };
-            }
+                await AddAsync(user);
 
-            return user;
+                IEnumerable<Category> list = await FindAllStandardCategories();
+                foreach (Category category in list)
+                {
+                    await AddRelationCategoryToUser(category.Id, user.Id);
+                }
+
+                return user;
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
         }
 
-        public async Task<ErrorCode> AddAsync(User user)
+        public async Task AddAsync(User user)
         {
             var isRegistered = await _userRepository.AddAsync(user);
 
-            if (isRegistered != 1) return ErrorCode.ErrorToSave;
-
-            return ErrorCode.Empty;
+            if(isRegistered != 1)
+            {
+                throw new Exception($"msg:Erro para adicionar novo usuário. codigo:{ErrorCode.ErrorToSave}");
+            }
         }
 
-        public async Task<User> FindByIdAsync(int userId) => await _userRepository.FindByIdAsync(userId); 
+        public async Task<User> FindByIdAsync(int userId) => await _userRepository.FindByIdAsync(userId);
 
         public async Task<User> FindByEmailAsync(string email) => await _userRepository.FindUserByEmailAsync(email);
 
@@ -69,7 +68,13 @@ namespace DinExApi.Business.Services
 
         private async Task<IEnumerable<Category>> FindAllStandardCategories() => await _categoryService.FindAllStandardAsync();
 
-        private async Task<ErrorCode> AddRelationCategoryToUser(int categoryId, int userId) => await _categoryUserService.ComposeRelationCreationAsync(categoryId, userId);
+        private async Task AddRelationCategoryToUser(int categoryId, int userId) { 
+            var result = await _categoryUserService.ComposeRelationCreationAsync(categoryId, userId); 
+            if(result != ErrorCode.Empty)
+            {
+                throw new Exception($"msg:Error ao criar relacionamento código:{result}");
+            }
+        }
 
     }
 }
