@@ -9,6 +9,8 @@ using DinExApi.Domain.Models;
 using DinExApi.Infrastructure.DB.Data;
 using DinExApi.Business.Services;
 using DinExApi.Business.Interfaces;
+using AutoMapper;
+using DinExApi.API.DTO;
 
 namespace DinExApi.API.Controllers
 {
@@ -20,11 +22,13 @@ namespace DinExApi.API.Controllers
          * - verificar necessidade dos metodos: PUT, DELETE e GET (GetUsers)
          * - refatorar a controller para remover o contexto
          */
+        private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         // GET: api/Users
@@ -82,9 +86,22 @@ namespace DinExApi.API.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<object>> PostUser(User user)
+        public async Task<IActionResult> Create(UserDTO userDTO)
         {
-             return await _userService.ComposeUserCreation(user);
+            try
+            {
+                var user = _mapper.Map<User>(userDTO);
+                var newUser = await _userService.ComposeUserCreation(user) as User;
+                if (newUser != null)
+                    userDTO.Id = newUser.Id;
+                
+                return Ok(userDTO);
+            }
+            catch (Exception e)
+            {
+                var ex = e;
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         // DELETE: api/Users/5

@@ -4,11 +4,11 @@ using DinExApi.Domain.Models;
 
 namespace DinExApi.API.Configurations.Profiles
 {
-    public class CategoryProfile : Profile
+    public class UserProfile : Profile
     {
-        public CategoryProfile()
+        public UserProfile()
         {
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

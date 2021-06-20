@@ -10,7 +10,7 @@ namespace DinExApi.Business.Interfaces
     public interface IUserService
     {
         Task<object> ComposeUserCreation(User user);
-        Task<ErrorCode> AddAsync(User user);
+        Task AddAsync(User user);
         Task<User> FindByIdAsync(int id);
         Task<User> FindByEmailAsync(string email);
     }

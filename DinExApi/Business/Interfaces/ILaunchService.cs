@@ -7,6 +7,7 @@ namespace DinExApi.Business.Interfaces
 {
     public interface ILaunchService
     {
+        Task<object> ComposeLaunchCreation(Launch launch, int userId);
         Task<ErrorCode> AddAsync(Launch launch);
         Task UpdateAsync(Launch launch);
         Task<ErrorCode> DeleteAsync(int launchID);
